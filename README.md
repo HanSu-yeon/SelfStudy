@@ -1,3 +1,3 @@
 # Today I Learned(TIL)
 
-개발 공부 기록
+그날그날 배운 것들을 기록
