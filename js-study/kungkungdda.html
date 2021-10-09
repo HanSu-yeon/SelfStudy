@@ -1,0 +1,62 @@
+<!-- 스스로 해보기
+조건1. prompt창 취소 누르면 코드 실행x
+조건2. 3글자만 입력 가능
+ -->
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쿵쿵따 게임</title>
+  </head>
+  <body>
+    <h3>꿍쓰꿍쓰꿍쓰~ 쿵쿵따리 쿵쿵따🎵</h3>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어:<span id="word"></span></div>
+    <input type="text" />
+    <button>입력</button>
+  </body>
+  <script>
+    const number = Number(prompt("몇 명이 참가하나요?")); //number변수에 몇 명 참가하나 저장
+
+    if (number) {
+      const $button = document.querySelector("button");
+      const $input = document.querySelector("input");
+      const $word = document.querySelector("#word");
+      const $order = document.querySelector("#order"); //현재 순서. #order태그 내부의 값을 꺼내 숫자로 변환하고 이를 order변수에 저장
+      let word;
+      let newWord; //현재 단어
+      const onClickButton = () => {
+        if (
+          (!word || word[word.length - 1] === newWord[0]) &&
+          newWord.length === 3
+        ) {
+          // 세 글자이면서 제시어가 비어 있거나 입력한 단어가 올바른가?
+          word = newWord; //입력한 단어가 제시어가 된다
+          $word.textContent = word; //화면에 제시어 표시
+
+          const order = Number($order.textContent);
+          if (order + 1 > number) {
+            $order.textContent = 1;
+          } else {
+            $order.textContent = order + 1;
+          }
+        } else {
+          //올바르지 않다
+          alert("올바르지 않은 단어입니다");
+        }
+        //겹쳐서 마지막으로 빼줬다
+        $input.value = "";
+        $input.focus();
+      };
+
+      const onInput = (event) => {
+        newWord = event.target.value; //입력한 단어를 현재 단어로. event.target: 이벤트가 발생한 대상 태그
+      };
+
+      $button.addEventListener("click", onClickButton);
+      $input.addEventListener("input", onInput);
+    }
+  </script>
+</html>
