@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>숫자야구</title>
+  </head>
+  <body>
+    <form id="form">
+      <!-- html5 자체검사(잘 사용x) -->
+      <input
+        required
+        type="text"
+        id="input"
+        minlength="4"
+        maxlength="4"
+        pattern="^(?!.*(.).*\1)\d{4}$"
+      />
+      <button>확인</button>
+    </form>
+    <div id="logs"></div>
+    <!-- div logs에는 사용자들의 기록이 쌓이는 곳 -->
+    <script>
+      const $input = document.querySelector("#input");
+      const $form = document.querySelector("#form");
+      const $logs = document.querySelector("#logs");
+
+      //1~9까지 반복문 돌면서 number배열에 추가
+      const numbers = [];
+      for (let n = 1; n <= 9; n += 1) {
+        numbers.push(n);
+      }
+
+      //숫자 4개 뽑아 answer배열에 추가
+      const answer = [];
+      for (let n = 0; n <= 3; n += 1) {
+        const index = Math.floor(Math.random() * numbers.length); // +1 안해줬으니까 0~8 정수
+        answer.push(numbers[index]); //뽑은 숫자는 answer배열에 push
+        numbers.splice(index, 1); //중복 방지하기 위해 뽑은 숫자는 삭제함
+      }
+      //   console.log(answer); //답 출력
+
+      const tries = []; //시도한 값
+      //input값 검사하는 코드(를 함수로 뺐다)
+      function checkInput(input) {
+        if (input.length !== 4) {
+          //길이는 4가 아닌가
+          return alert("4자리 숫자를 입력해 주세요");
+        }
+        if (new Set(input).size !== 4) {
+          //중복된 숫자가 있는가
+          return alert("중복되지 않게 입력해주세요");
+        }
+        if (tries.includes(input)) {
+          //이미 시도한 값은 아닌가
+          return alert("이미 시도한 값입니다");
+        }
+        return true; //검증에서 다 통과하면 true반환
+        //반환한 값은 아래 if문에 넣어 검사가 실패했는지 아닌지 판단할 때 사용
+      }
+
+      $form.addEventListener("submit", (event) => {
+        event.preventDefault(); //기본 동작 막기(새로고침 취소)
+        const value = $input.value; //입력 값을 value에 저장. 들어온 값은 문자열로 저장
+        $input.value = ""; //input창 비워줌
+        const valid = checkInput(value);
+        //만약 함수에서 alert에 걸리면 alert의 return값인 undefined가 반환된다
+        if (!valid) return; //통과하지 못했으면 return
+
+        //입력값 문제없음
+        if (answer.join("") === value) {
+          //[3,1,4,6] 을 join=>'3146'
+          $logs.textContent = "홈런!";
+          return;
+        }
+        //10번째 시도때 실패하면 패배
+        if (tries.length >= 9) {
+          const message = document.createTextNode(
+            `패배! 정답은 ${answer.join("")}`
+          );
+          $logs.appendChild(message);
+          return;
+        }
+        //몇 스트라이크 몇 볼인지 검사
+        let strike = 0;
+        let ball = 0;
+        //answer:3146, value(사용자 입력값):1234
+        for (let i = 0; i < answer.length; i++) {
+          const index = value.indexOf(answer[i]);
+          if (index > -1) {
+            //일치하는 숫자 발견
+            if (index === i) {
+              //자릿수도 같음
+              strike += 1;
+            } else {
+              //숫자만 같음
+              ball += 1;
+            }
+          }
+        }
+        $logs.append(
+          `${value}: ${strike} 스트라이크 ${ball} 볼`,
+          document.createElement("br")
+        );
+        tries.push(value);
+      });
+    </script>
+  </body>
+</html>
