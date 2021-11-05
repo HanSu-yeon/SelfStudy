@@ -12,9 +12,10 @@
         border-radius: 20px;
         width: 40px;
         height: 40px;
-        line-height: 40px;
+        /* inline-block에서 텍스트 가운데 정렬 방법 */
+        line-height: 40px; /*inline-height랑 height와 같게 해주면  수직정렬이 가능하다*/
+        text-align: center; /*수평방향 정렬*/
         font-size: 20px;
-        text-align: center;
         margin-right: 20px;
       }
     </style>
@@ -47,22 +48,40 @@
     const $result = document.querySelector("#result");
     const $bonus = document.querySelector("#bonus");
 
-    const showBall = (number, $target) => {
+    function colorize(number, $tag) {
+      if (number < 10) {
+        $tag.style.backgroundColor = "rgb(164, 156, 238)";
+        $tag.style.color = "white";
+      } else if (number < 20) {
+        $tag.style.backgroundColor = "rgb(245, 139, 69)";
+        $tag.style.color = "white";
+      } else if (number < 30) {
+        $tag.style.backgroundColor = "rgb(244, 245, 191)";
+      } else if (number < 40) {
+        $tag.style.backgroundColor = "skyblue";
+      } else {
+        $tag.style.backgroundColor = "rgb(102, 184, 102)";
+        $tag.style.color = "white";
+      }
+    }
+
+    const drawBall = (number, $parent) => {
       const $ball = document.createElement("div");
       $ball.className = "ball";
+      colorize(number, $ball);
       $ball.textContent = number;
-      $target.appendChild($ball);
+      $parent.appendChild($ball);
     };
     //[0,1,2,3,4,5=>[1000,2000,3000,,4000,5000]
     for (let i = 0; i < winBalls.length; i++) {
       setTimeout(() => {
-        showBall(winBalls[i], $result);
+        drawBall(winBalls[i], $result);
       }, (i + 1) * 1000);
     }
 
     //보너스 공
     setTimeout(() => {
-      showBall(bonus, $bonus);
+      drawBall(bonus, $bonus);
     }, 7000);
   </script>
 </html>
