@@ -1,7 +1,10 @@
-<html>
+<!DOCTYPE html>
+<html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <title>가위바위보</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
     <style>
       #computer {
         width: 142px;
@@ -9,7 +12,6 @@
       }
     </style>
   </head>
-
   <body>
     <div id="computer"></div>
     <div>
@@ -18,90 +20,109 @@
       <button id="paper" class="btn">보</button>
     </div>
     <div id="score">0</div>
-    <script>
-      const $computer = document.querySelector("#computer");
-      const $score = document.querySelector("#score");
-      const $rock = document.querySelector("#rock");
-      const $scissors = document.querySelector("#scissors");
-      const $paper = document.querySelector("#paper");
-      const IMG_URL = "./rsp.png";
-      $computer.style.background = `url(${IMG_URL}) 0 0`;
+  </body>
+  <script>
+    const $computer = document.querySelector("#computer");
+    const $score = document.querySelector("#score");
+    const $scissors = document.querySelector("#scissors");
+    const $rock = document.querySelector("#rock");
+    const $paper = document.querySelector("#paper");
+
+    const IMG_URL = "./rsp.png";
+
+    $computer.style.background = `url(${IMG_URL}) 0 0`;
+    $computer.style.backgroundSize = "auto 200px";
+
+    //가위바위보 x좌표
+    const rspX = {
+      scissors: "0", //가위
+      rock: "-220px", //바위
+      paper: "-440px", //보
+    };
+
+    let computerChoice = "scissors"; //컴퓨터선택 초기값
+    //setInterval함수에서 실행되는 함수
+    const comChangeHand = () => {
+      if (computerChoice === "scissors") {
+        //컴터 선택이 가위면 computerChoice데이터를 바위로 바꿔라
+        computerChoice = "rock";
+      } else if (computerChoice === "rock") {
+        computerChoice = "paper";
+      } else if (computerChoice === "paper") {
+        computerChoice = "scissors";
+      }
+      //화면 바꾸기
+      $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
       $computer.style.backgroundSize = "auto 200px";
+    };
+    let interValid = setInterval(comChangeHand, 70);
 
-      const rspX = {
-        scissors: "0", //가위
-        rock: "-220px", //바위
-        paper: "-440px", //보
-      };
+    //가위바위보를 숫자화하고 규칙찾기(빼기 사용)
 
-      let computerChoice = "scissors"; //컴퓨터 선택
-      const changeComputerHand = () => {
-        if (computerChoice === "rock") {
-          //가위면
-          //데이터 바꾸기
-          computerChoice = "scissors";
-        } else if (computerChoice === "scissors") {
-          //바위면
-          computerChoice = "paper";
-        } else if (computerChoice === "paper") {
-          //보
-          computerChoice = "rock";
+    // 가위: 1,  바위: 0,   보: -1
+    // 나\컴퓨터  가위    바위    보
+    // 가위       0       1       2
+    // 바위      -1       0       1
+    // 보        -2      -1       0
+    const scoreTable = {
+      scissors: 1,
+      rock: 0,
+      paper: -1,
+    };
+    let clickable = true;
+    let me = 0;
+    let computer = 0;
+
+    const clickBtn = () => {
+      if (clickable) {
+        //clickable이 true일때만 이벤트가 실행되게
+        clearInterval(interValid);
+        clickable = false;
+
+        //점수계산
+        const myChoice = //내 선택
+          event.target.textContent === "가위"
+            ? "scissors"
+            : event.target.textContent === "바위"
+            ? "rock"
+            : "paper";
+        //점수계산
+        const myScore = scoreTable[myChoice];
+        const comScore = scoreTable[computerChoice];
+        const diff = myScore - comScore;
+        let message;
+
+        //2,-1은 승리조건이고 , -2,1은 패배조건, 점수표 참고
+
+        if ([2, -1].includes(diff)) {
+          me += 1;
+
+          message = "승리";
+        } else if ([1, -2].includes(diff)) {
+          computer += 1;
+
+          message = "패배";
+        } else {
+          message = "무승부";
         }
-        //화면 바꾸기
-        $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
-        $computer.style.backgroundSize = "auto 200px";
-      };
-
-      let intervalid = setInterval(changeComputerHand, 50); //intervalid변수에는 setInteval함수의 리턴값이 들어간다
-      // 가위: 1,  바위: 0,   보: -1
-      // 나\컴퓨터  가위    바위    보
-      // 가위       0       1       2
-      // 바위      -1       0       1
-      // 보        -2      -1       0
-      const scoreTable = {
-        rock: 0,
-        scissors: 1,
-        paper: -1,
-      };
-      let clickable = true;
-      let score = 0;
-      const clickButton = () => {
-        if (clickable) {
-          clearInterval(intervalid); //clearInterval안에 setInterval함수의 리턴값(intervalid)을 넣어준다
-          clickable = false;
-          //점수 계산 및 화면 표시
-          const myChoice = //내 선택
-            event.target.textContent === "바위"
-              ? "rock"
-              : event.target.textContent === "가위"
-              ? "scissors"
-              : "paper";
-          //점수계산
-          const myScore = scoreTable[myChoice];
-          const computerScore = scoreTable[computerChoice];
-          const diff = myScore - computerScore;
-          let message;
-          //2,-1은 승리조건이고 , -2,1은 패배조건, 점수표 참고
-          if ([2, -1].includes(diff)) {
-            score += 1;
-            message = "승리";
-          } else if ([-2, 1].includes(diff)) {
-            score -= 1;
-            message = "패배";
-          } else {
-            message = "무승부";
-          }
-          $score.textContent = `${message} 총: ${score}점`;
+        //5판 3선승제
+        if (me >= 3) {
+          $score.textContent = `유저 승리 ${me} :${computer}`;
+        } else if (computer >= 3) {
+          $score.textContent = `컴퓨터 승리 ${me} :${computer}`;
+        } else {
+          $score.textContent = `${message} ${me} :${computer}`;
           setTimeout(() => {
             clickable = true;
-            intervalid = setInterval(changeComputerHand, 50);
-          }, 1000);
+            interValid = setInterval(comChangeHand, 70);
+          }, 1500);
         }
-      };
+      }
+    };
 
-      $rock.addEventListener("click", clickButton);
-      $scissors.addEventListener("click", clickButton);
-      $paper.addEventListener("click", clickButton);
-    </script>
-  </body>
+    //클릭=>clickBtn함수 실행 =>사진 1.5초 멈춤
+    $scissors.addEventListener("click", clickBtn);
+    $rock.addEventListener("click", clickBtn);
+    $paper.addEventListener("click", clickBtn);
+  </script>
 </html>
