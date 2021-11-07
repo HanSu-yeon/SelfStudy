@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    #screen {
+      width: 400px;
+      height: 200px;
+      text-align: center;
+      user-select: none;
+    }
+    #screen.waiting {
+      background-color: skyblue;
+    }
+    #screen.ready {
+      background-color: tomato;
+    }
+    #screen.now {
+      background-color: yellowgreen;
+    }
+  </style>
+  <body>
+    <div id="screen" class="waiting">클릭해주세요</div>
+    <div id="result"></div>
+  </body>
+  <script>
+    const $screen = document.querySelector("#screen");
+    const $result = document.querySelector("#result");
+
+    let startTime;
+    let endTime;
+    let records = [];
+    let timeoutId;
+    const changeScreen = () => {
+      if ($screen.classList.contains("waiting")) {
+        //파란 화면일 때
+        $screen.classList.replace("waiting", "ready");
+        $screen.textContent = "초록색으로 바뀌면 클릭!";
+        timeoutId = setTimeout(function () {
+          //시간 재기
+          startTime = new Date();
+          //초록 화면으로 전환
+          $screen.classList.replace("ready", "now");
+        }, Math.floor(Math.random() * 1000) + 2000); //2~3초 사이
+      } else if ($screen.classList.contains("ready")) {
+        //빨간 화면일 때 클릭
+        //타이머 함수를 제거해 코드가 실행되지 않게 한다
+        clearTimeout(timeoutId);
+        //초기화면으로 돌아감
+        $screen.classList.replace("ready", "waiting");
+        //너무 빨리 눌렀다고 알림
+        $screen.textContent = "너무 빨리 눌렀지롱><";
+      } else if ($screen.classList.contains("now")) {
+        //초록 화면일 때 클릭
+        //시간 측정
+        endTime = new Date();
+
+        //시간차 구하고
+        let currentTime = endTime - startTime;
+        //평균 구하기
+
+        records.push(currentTime); //현재 값들을 records에 저장
+        const average = (
+          records.reduce((a, c) => a + c) / records.length
+        ).toFixed(2);
+        //결과값 화면에 표시하기
+        $result.textContent = `현재 ${currentTime}ms 평균 ${average}ms`;
+        //TOP5 보여주기
+        const topFive = records.sort((a, b) => a - b).slice(0, 5);
+        topFive.forEach((e, i) => {
+          $result.append(document.createElement("br"), `${i + 1}위: ${e}ms`);
+        });
+
+        //startTime,endTime 초기화 해주기 (예전 값이 다음번에도 쓰이는 걸 방지하기 위해)
+        startTime = null;
+        endTime = null;
+        //초기화면으로 전환
+        $screen.classList.replace("now", "waiting");
+        $screen.textContent = "클릭해서 시작하세요";
+      }
+    };
+
+    $screen.addEventListener("click", changeScreen);
+  </script>
+</html>
