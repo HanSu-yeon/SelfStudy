@@ -1,4 +1,4 @@
-package com.example.jwt.controller;
+package com.example.jwtprac.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,3 +13,5 @@ public class HelloController {
         return ResponseEntity.ok("hello");
     }
 }
+
+
