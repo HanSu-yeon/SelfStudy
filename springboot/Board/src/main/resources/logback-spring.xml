@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
-	<!-- Appender: 전달받은 로그를 어디에 출력할지 결정(콘솔출력, 파일저장, 데이터베이스 저장)-->
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<!-- appender에 포함되어 출력할 로그의 형식을 지정 -->
-		<encoder>
-			<Pattern>%d %5p [%c] %m%n</Pattern>
-		</encoder>
-	</appender>
-	
-	<appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<Pattern>%d %5p %m%n</Pattern>
-		</encoder>
-	</appender>
-	<!-- Logger: 로그를 출력하는 요소로, level속성을 토애 출력할 로그의 레벨을 조절하여 appender에 전달함 -->
-	<logger name="com.board" level="DEBUG" appender-ref="console"/>
-	<logger name="jdbc.sqlonly" level="INFO" appende-ref="console-infolog"/>
-	<logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolo"/>
-	<!-- Root Logger -->
-	<root level="off">
-		<appender-ref ref="console"/>
-	</root>
+    <!-- Appender: 전달받은 로그를 어디에 출력할지 결정(콘솔출력, 파일저장, 데이터베이스 저장)-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- appender에 포함되어 출력할 로그의 형식을 지정 -->
+        <encoder>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d %5p %m%n</Pattern>
+        </encoder>
+    </appender>
+    <!-- Logger: 로그를 출력하는 요소로, level속성을 토애 출력할 로그의 레벨을 조절하여 appender에 전달함 -->
+    <logger name="com.board" level="DEBUG" appender-ref="console"/>
+    <logger name="jdbc.sqlonly" level="INFO" appende-ref="console-infolog"/>
+    <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolo"/>
+    <!-- Root Logger -->
+    <root level="off">
+        <appender-ref ref="console"/>
+    </root>
 </configuration>		
 

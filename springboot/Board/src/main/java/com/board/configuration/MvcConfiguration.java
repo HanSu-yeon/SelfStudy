@@ -9,10 +9,10 @@ import com.board.interceptor.LoggerInterceptor;
 @Configuration
 public class MvcConfiguration implements WebMvcConfigurer {
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new LoggerInterceptor())
-		.excludePathPatterns("/css/**","/fonts/**","/plugin/**","/scripts/**");
-	}
-	
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoggerInterceptor())
+                .excludePathPatterns("/css/**", "/fonts/**", "/plugin/**", "/scripts/**");
+    }
+
 }

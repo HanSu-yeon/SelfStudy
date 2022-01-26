@@ -10,6 +10,6 @@ import com.study.exception.ErrorCode;
 @RestController
 @RequestMapping("/api")
 public class BoardApiController {
-	
+
 
 }
