@@ -1,0 +1,37 @@
+# 도커 컴포즈의 버전
+version: '3'
+# 실행하는 컨테이너들을 정의
+services:
+  # 서비스 이름
+  react:
+    # 현 디렉터리에 있는 Dockerfile 사용
+    build:
+      # 도커 이미지를 구성하기 위한 파일과 폴더들이 있는 위치
+      context: .
+      # 도커 파일 어떤 것인지 지정
+      dockerfile: Dockerfile.dev
+    # 포트 매핑 => 로컬 포트 : 컨테이너 포트
+    ports:
+      - '3000:3000'
+    # 로컬 머신에 있는 파일들을 매핑
+    volumes:
+      #/usr/src/app/node_modules은 참조하지 않겠다
+      - /usr/src/app/node_modules
+      # ./:/usr/src/app는 참조하겠다
+      - ./:/usr/src/app
+    # environment:
+    #   #중요함// 리액트 핫 리로딩 적용. 윈도우 터미널에서만 필요
+    #   #소스 수정 즉시 반영되는 핫로딩 활성화하는 부분
+    #   - CHOKIDAR_USEPOLLING=true
+    #리액트에 한정된 명령어. 리액트 앱을 끌 때 필요. 리액트에 나오는 버그를 잡기위해
+    stdin_open: true
+  #테스트용
+  #테스트 컨테이너 이름
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /usr/src/app/node_modules
+      - ./:/usr/src/app
+    command: ['npm', 'run', 'test']
