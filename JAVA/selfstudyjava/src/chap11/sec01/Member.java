@@ -3,7 +3,7 @@ package chap11.sec01;
 public class Member {
     public String id;
 
-    public Member(String id) {
+    public Member(String id, String 이파란) {
         this.id = id;
     }
 
