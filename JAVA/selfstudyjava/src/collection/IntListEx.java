@@ -1,4 +1,4 @@
-package CollectionPack;
+package collection;
 
 public class IntListEx {
     public static void main(String[] args) {
