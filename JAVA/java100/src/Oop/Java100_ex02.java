@@ -23,6 +23,28 @@ public class Java100_ex02 {
         int b2_int = Integer.parseInt(b2);
         int result3 = a2_int + b2_int;
         System.out.println(result3);
+        System.out.println("------진수 지정-------------");
+        System.out.println(Integer.parseInt("2022", 10));
+        System.out.println(Integer.parseInt("1011", 2)); //1011(2진수)를 10진수로
+        System.out.println(Integer.parseInt("1004", 8)); //1011(8진수)를 10진수로-->516
+        /*8진수 계산법
+        1004
+            4*(8^0)=4
+            0*(8^1)=
+            0*(8^2)=
+            1*(8^3)=512
+        */
+        System.out.println(Integer.parseInt("A", 16));//10
+        /*
+         * 10진수--> 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+         * 16진수--> 0 1 2 3 4 5 6 7 8 9 A  B  C  D  E  F
+         * */
+        System.out.println(Integer.parseInt("FF", 16)); //255
+        /*FF-->10진수로
+         * 15*(16^0) = 15
+         * 15*(16^1) = 240
+         *                  -->255
+         * */
 
     }
 }
