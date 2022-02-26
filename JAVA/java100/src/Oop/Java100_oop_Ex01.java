@@ -14,6 +14,8 @@
  */
 package Oop;
 
+import java.text.DecimalFormat;
+
 class FarmMachine {
     /**
      * 1. 속성(특징)
@@ -53,8 +55,14 @@ public class Java100_oop_Ex01 {
         fm.year = 2022;
         fm.color = "green";
 
-        //3. 속성 값 출력하기
+        //금액을 1000단위로 콤마 찍어 출력하기1
+        DecimalFormat df = new DecimalFormat("###,###");
+        String money = df.format((fm.price));
+        //금액을 1000단위로 콤마 찍어 출력하기2
+        String money2 = String.format("%,d", 1000000);
         System.out.println("가격>>" + fm.price);
+        System.out.println("가격(콤마 찍어 출력)1>>" + money);
+        System.out.println("가격(콤마 찍어 출력)2>>" + money2);
         System.out.println("연식>>" + fm.year);
         System.out.println("색상>>" + fm.color);
 
