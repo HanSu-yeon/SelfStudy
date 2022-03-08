@@ -30,11 +30,11 @@ class Person {
 
 public class Java100_ex03 {
     public static void main(String[] args) {
-        Person p1 = new Person(20, "홍길동");
-        p1.show();
-        Person p2 = new Person(30, "이순신");
-        p2.show();
-        Person p3 = new Person(40, "을지문덕");
-        p3.show();
+//        Person7 p1 = new Person7(20, "홍길동");
+//        p1.show();
+//        Person7 p2 = new Person7(30, "이순신");
+//        p2.show();
+//        Person7 p3 = new Person7(40, "을지문덕");
+//        p3.show();
     }
 }

@@ -1,7 +1,5 @@
 package Oop;
 
-// 객체에 대한 참조값을 요소로 가지는 "객체 배열"을 생성하는 코드를 구현하시오.
-
 
 class Person4 {
     //Feild

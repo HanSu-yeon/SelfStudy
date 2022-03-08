@@ -2,6 +2,8 @@
 // 이 문제는 자바의 메서드 작성법과 반환값, 인자값에 대한 이해가 있는지를 묻는 문제이다.
 
 
+import java.util.Arrays;
+
 public class Java100_method_Ex04 {
 
     public static int returnMethod() {
@@ -20,5 +22,24 @@ public class Java100_method_Ex04 {
         //출력
         System.out.println("메서드 호출에 따르 리턴된 값은=" + result);
 
+    }
+
+    public static class Java100_method_Ex9 {
+
+        public static String[] capitalMethod(String str1, String str2) {
+            str1 = str1.toUpperCase();
+            str2 = str2.toLowerCase();
+
+            String[] ret = {str1, str2};
+            return ret;
+        }
+
+        public static void main(String[] args) {
+            //반환값O, 받는 인자값O
+            String[] result = capitalMethod("korea", "USA");
+            System.out.println(Arrays.toString(result)); //한번에 출력
+            System.out.println(result[0] + "," + result[1]);
+
+        }
     }
 }
