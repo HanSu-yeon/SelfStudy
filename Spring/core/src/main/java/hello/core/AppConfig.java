@@ -19,21 +19,26 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration //구성(설정)정보
 public class AppConfig {
+
     //각 역할이 한눈에 보인다
 
     @Bean
-    public MemberService memberService(){
+    public MemberService memberService()
+    {
+        System.out.println("call AppConfig.memberService");
         return new MemberServiceImpl(memberRepository());
     }
 
     @Bean
     public MemberRepository memberRepository() {
+        System.out.println("call AppConfig.memberRepository");
         return new MemoryMemberRepository();
     }
 
     @Bean
     //AppConfig를 통해 orderService를 조회하면 OrderServiceImpl이 반환 이때 두개가 매개변수로 주입
     public OrderService orderService(){
+        System.out.println("call AppConfig.orderService");
         return new OrderServiceImpl(memberRepository(), discountPolicy());
     }
 
