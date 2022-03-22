@@ -2,9 +2,8 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="board/fragments/header :: main-head"></head>
 <body>
-<form th:if="${not #maps.isEmpty( params )}" name="dataForm" th:action="${redirectUri}" th:method="${method}"
-      style="display: none;">
-    <input th:each="key, status : ${params.keySet()}" type="hidden" th:name="${key}" th:value="${params.get(key)}"/>
+<form th:if="${not #maps.isEmpty( params )}" name="dataForm" th:action="${redirectUri}" th:method="${method}" style="display: none;">
+    <input th:each="key, status : ${params.keySet()}" type="hidden" th:name="${key}" th:value="${params.get(key)}" />
 </form>
 
 <script th:src="@{/scripts/common.js}"></script>
@@ -13,17 +12,17 @@
     <script th:inline="javascript">
         /* <![CDATA[ */
 
-        window.onload = function () {
-            var message = /*[[ ${message} ]]*/null;
+        window.onload = function() {
+            var message = /*[[ ${message} ]]*/;
             if (isEmpty(message) == false) {
                 alert(message);
             }
 
-            var params = /*[[ ${params} ]]*/null;
+            var params = /*[[ ${params} ]]*/;
             if (isEmpty(params) == false) {
-                document.dataForm.submit(); //params가 비어있지 않으면 폼을 컨트롤러로 서브밋 한다
+                document.dataForm.submit();
             } else {
-                var redirectUri = /*[[ ${redirectUri} ]]*/null;
+                var redirectUri = /*[[ ${redirectUri} ]]*/;
                 location.href = redirectUri;
             }
         }
