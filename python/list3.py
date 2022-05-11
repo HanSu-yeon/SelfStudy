@@ -21,3 +21,8 @@ for x in a:
   for y in x:
     print(y, end=' ')
   print()
+'''
+0 1 0
+0 0 0
+0 0 0
+'''
